@@ -1,4 +1,4 @@
-# Arduino debug utilities
+# Arduino debug utilities [![Build Status](https://travis-ci.org/yoreek/Arduino-DebugUtil.svg?branch=master)](https://travis-ci.org/yoreek/Arduino-DebugUtil)
 
 * Version: 1.0.0
 * Release Date: 2016-01-02
