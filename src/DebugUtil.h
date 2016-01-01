@@ -1,6 +1,6 @@
 /*
  * DebugUtil.h - Arduino debug utilities
- * Copyright (C) 2015 Yuriy Ustushenko
+ * Copyright (C) 2016 Yuriy Ustushenko
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the version 3 GNU General Public License as
@@ -19,6 +19,7 @@
 #ifndef DEBUG_UTIL_H
 #define DEBUG_UTIL_H
 
+#define WITH_DEBUG
 #ifdef WITH_DEBUG
 
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -29,8 +30,14 @@
 #include <stdarg.h>
 
 #ifndef DEBUG_OUT
-#define DEBUG_OUT &Serial
+#define DEBUG_OUT Serial
 #endif
+
+#define DEBUG_SERIAL_SETUP(speed)                                       \
+    do {                                                                \
+        (DEBUG_OUT).begin(speed);                                       \
+        while (!(DEBUG_OUT));                                           \
+    } while (0)
 
 #ifndef DEBUG_BUF_LEN
 #define DEBUG_BUF_LEN 80
@@ -38,13 +45,13 @@
 
 #ifdef USE_STRING_UTIL
 #  include <StringUtil.h>
-#  define DEBUG_PRINT(fmt, ...) r::printf(DEBUG_OUT, fmt, ##__VA_ARGS__)
+#  define DEBUG_PRINT(fmt, ...) StringUtil::fprintf(DEBUG_OUT, fmt, ##__VA_ARGS__)
 #else
 #  define DEBUG_PRINT(fmt, ...)                                         \
     do {                                                                \
         char buf[DEBUG_BUF_LEN];                                        \
         snprintf(buf, DEBUG_BUF_LEN, fmt, ##__VA_ARGS__);               \
-        (DEBUG_OUT)->print(buf);                                        \
+        (DEBUG_OUT).print(buf);                                         \
     } while (0)
 #endif
 
@@ -63,14 +70,18 @@
     do {                                                                \
         DEBUG_PREFIX;                                                   \
         DEBUG_PRINT(fmt, ##__VA_ARGS__);                                \
-        (DEBUG_OUT)->println();                                         \
+        (DEBUG_OUT).println();                                          \
     } while (0)
+
 #else
+
 #define DEBUG(fmt, ...)
+#define DEBUG_SERIAL_SETUP(speed)
+#define DEBUG_PRINT(fmt, ...)
 
 #endif // WITH_DEBUG
 
-extern "C++" { namespace r {
+extern "C++" { namespace DebugUtil {
 
 int ramFree();
 int ramSize();

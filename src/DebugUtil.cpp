@@ -1,6 +1,6 @@
 /*
  * DebugUtil.h - Arduino debug utilities
- * Copyright (C) 2015 Yuriy Ustushenko
+ * Copyright (C) 2016 Yuriy Ustushenko
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the version 3 GNU General Public License as
@@ -16,17 +16,15 @@
  *
  */
 
-#ifdef WITH_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
 #else
 #include "WProgram.h"
 #endif
-#include "DebugUtil.h"
 
 extern int __heap_start, *__brkval;
 
-extern "C++" { namespace r {
+extern "C++" { namespace DebugUtil {
 
 int ramFree() {
     int v;
@@ -41,5 +39,3 @@ int ramSize() {
 }
 
 }} // namespace
-
-#endif // WITH_DEBUG
