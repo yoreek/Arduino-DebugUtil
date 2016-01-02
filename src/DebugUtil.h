@@ -19,7 +19,6 @@
 #ifndef DEBUG_UTIL_H
 #define DEBUG_UTIL_H
 
-#define WITH_DEBUG
 #ifdef WITH_DEBUG
 
 #if defined(ARDUINO) && ARDUINO >= 100
