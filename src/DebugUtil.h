@@ -44,12 +44,12 @@
 
 #ifdef USE_STRING_UTIL
 #  include <StringUtil.h>
-#  define DEBUG_PRINT(fmt, ...) StringUtil::fprintf(DEBUG_OUT, fmt, ##__VA_ARGS__)
+#  define DEBUG_PRINT(...) StringUtil::fprintf(DEBUG_OUT, __VA_ARGS__)
 #else
-#  define DEBUG_PRINT(fmt, ...)                                         \
+#  define DEBUG_PRINT(...)                                              \
     do {                                                                \
         char buf[DEBUG_BUF_LEN];                                        \
-        snprintf(buf, DEBUG_BUF_LEN, fmt, ##__VA_ARGS__);               \
+        snprintf(buf, DEBUG_BUF_LEN, __VA_ARGS__);                      \
         (DEBUG_OUT).print(buf);                                         \
     } while (0)
 #endif
@@ -65,18 +65,18 @@
 #  endif
 #endif
 
-#define DEBUG(fmt, ...)                                                 \
+#define DEBUG(...)                                                      \
     do {                                                                \
         DEBUG_PREFIX;                                                   \
-        DEBUG_PRINT(fmt, ##__VA_ARGS__);                                \
+        DEBUG_PRINT(__VA_ARGS__);                                       \
         (DEBUG_OUT).println();                                          \
     } while (0)
 
 #else
 
-#define DEBUG(fmt, ...)
+#define DEBUG(...)
 #define DEBUG_SERIAL_SETUP(speed)
-#define DEBUG_PRINT(fmt, ...)
+#define DEBUG_PRINT(...)
 
 #endif // WITH_DEBUG
 
