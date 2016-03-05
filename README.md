@@ -1,7 +1,7 @@
 # Arduino debug utilities [![Build Status](https://travis-ci.org/yoreek/Arduino-DebugUtil.svg?branch=master)](https://travis-ci.org/yoreek/Arduino-DebugUtil)
 
-* Version: 1.0.1
-* Release Date: 2016-02-06
+* Version: 1.0.2
+* Release Date: 2016-03-05
 
 ## What is this repository for? ##
 
@@ -97,6 +97,8 @@ Included on example folder, available on Arduino IDE.
 
 ## Version History ##
 
+ * 1.0.2 (2016-03-05): Improved macros.
+                       Added feature to keep strings in PROGMEM (USE_PROGMEM).
  * 1.0.1 (2016-02-06): Fix warning about variadic macros.
  * 1.0.0 (2016-01-02): Initial version.
 
