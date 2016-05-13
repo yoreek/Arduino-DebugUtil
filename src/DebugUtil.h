@@ -27,6 +27,7 @@
 #include "WProgram.h"
 #endif
 #include <stdarg.h>
+#include <inttypes.h>
 
 #ifndef DEBUG_OUT
 #define DEBUG_OUT Serial
@@ -67,13 +68,14 @@
 #define PP_CAT(x, y)        PP_CAT_(x, y)
 
 #define DEBUG_PRINT_0()
-#define DEBUG_PRINT_1(fmt)  (DEBUG_OUT).print(__FLASH_STR(fmt))
 #define DEBUG_PRINT(...)    PP_CAT(DEBUG_PRINT_, PP_NARG1(__VA_ARGS__))(__VA_ARGS__)
 
 #ifdef USE_STRING_UTIL
 #  include <StringUtil.h>
+#  define DEBUG_PRINT_1(fmt) StringUtil::fprintf(DEBUG_OUT, __FLASH_STR(fmt))
 #  define DEBUG_PRINT_X(fmt, ...) StringUtil::fprintf(DEBUG_OUT, __FLASH_STR(fmt), __VA_ARGS__)
 #else
+#  define DEBUG_PRINT_1(fmt) (DEBUG_OUT).print(__FLASH_STR(fmt))
 #  define DEBUG_PRINT_X(fmt, ...)                                       \
     do {                                                                \
         char buf[DEBUG_BUF_LEN];                                        \
@@ -100,11 +102,21 @@
         (DEBUG_OUT).println();                                          \
     } while (0)
 
+#define DEBUG_MEMORY(interval)                                          \
+    do {                                                                \
+        static uint32_t printed = 0;                                    \
+        if (printed == 0 || (millis() - printed) >= interval) {         \
+            DEBUG("ramSize:%d ramFree:%d", DebugUtil::ramSize(), DebugUtil::ramFree());\
+            printed = millis();                                         \
+        }                                                               \
+    } while (0)
+
 #else
 
 #define DEBUG(...)
 #define DEBUG_SERIAL_SETUP(speed)
 #define DEBUG_PRINT(...)
+#define DEBUG_MEMORY(interval)
 
 #endif // WITH_DEBUG
 

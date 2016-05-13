@@ -97,6 +97,7 @@ Included on example folder, available on Arduino IDE.
 
 ## Version History ##
 
+ * 1.0.3 (2016-05-13): Fix bug when call without parameters.
  * 1.0.2 (2016-03-05): Improved macros.
                        Added feature to keep strings in PROGMEM (USE_PROGMEM).
  * 1.0.1 (2016-02-06): Fix warning about variadic macros.
