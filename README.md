@@ -107,3 +107,7 @@ Included on example folder, available on Arduino IDE.
 ## Who do I talk to? ##
 
  * [Yoreek](https://github.com/yoreek)
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/yoreek/arduino-debugutil/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
