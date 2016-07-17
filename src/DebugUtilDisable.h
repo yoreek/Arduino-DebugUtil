@@ -1,5 +1,5 @@
 /*
- * DebugUtil.h - Arduino debug utilities
+ * DebugUtilDisable.h - Arduino debug utilities
  * Copyright (C) 2016 Yuriy Ustushenko
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,20 +16,12 @@
  *
  */
 
-#ifndef DEBUG_UTIL_H
-#define DEBUG_UTIL_H
+#ifndef DEBUG_UTIL_DISABLE_H
+#define DEBUG_UTIL_DISABLE_H
 
-#ifdef WITH_DEBUG
-#include "DebugUtilEnable.h"
-#else
-#include "DebugUtilDisable.h"
-#endif
+#define DEBUG(...)
+#define DEBUG_SERIAL_SETUP(speed)
+#define DEBUG_PRINT(...)
+#define DEBUG_MEMORY(interval)
 
-extern "C++" { namespace DebugUtil {
-
-int ramFree();
-int ramSize();
-
-}} // namespace
-
-#endif // DEBUG_UTIL_H
+#endif // DEBUG_UTIL_DISABLE
