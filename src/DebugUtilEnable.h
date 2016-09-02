@@ -15,9 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-#ifndef DEBUG_UTIL_ENABLE_H
-#define DEBUG_UTIL_ENABLE_H
+#pragma once
+#ifndef _DEBUG_UTIL_ENABLE_H_
+#define _DEBUG_UTIL_ENABLE_H_
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
@@ -33,11 +33,13 @@
 #endif
 
 
-#define DEBUG_SERIAL_SETUP(speed)                                       \
+#define DEBUG_SERIAL_SETUP(speed) DEBUG_SERIAL_BEGIN(speed)
+#define DEBUG_SERIAL_BEGIN(speed)                                       \
     do {                                                                \
         (DEBUG_OUT).begin(speed);                                       \
         while (!(DEBUG_OUT));                                           \
     } while (0)
+#define DEBUG_SERIAL_END()        (DEBUG_OUT).end()
 
 
 #if defined(F) && defined(USE_PROGMEM)
@@ -93,13 +95,17 @@
     } while (0)
 
 
-#define DEBUG_MEMORY(interval)                                          \
-    do {                                                                \
-        static uint32_t printed = 0;                                    \
-        if (printed == 0 || (millis() - printed) >= interval) {         \
-            DEBUG("ramSize:%d ramFree:%d", DebugUtil::ramSize(), DebugUtil::ramFree());\
-            printed = millis();                                         \
-        }                                                               \
-    } while (0)
+#define DEBUG_EVERY_0()
+#define DEBUG_EVERY_1(t)                    runEvery(t)
+#define DEBUG_EVERY_X(t, ...)               runEvery(t) DEBUG(__VA_ARGS__)
+#define DEBUG_EVERY(...)                    PP_CAT(DEBUG_EVERY_, PP_NARG1(__VA_ARGS__))(__VA_ARGS__)
+#define DEBUG_EVERY_WITH_DELAY_1(t, d)      runEveryWithDelay(t, d)
+#define DEBUG_EVERY_WITH_DELAY_X(t, d, ...) runEveryWithDelay(t, d) DEBUG(__VA_ARGS__)
+#define DEBUG_EVERY_WITH_DELAY(t, ...)      PP_CAT(DEBUG_EVERY_WITH_DELAY_, PP_NARG1(__VA_ARGS__))(t, __VA_ARGS__)
 
-#endif // DEBUG_UTIL_ENABLE_H
+
+#define DEBUG_MEMORY()                                                  \
+    DEBUG("ramSize:%d ramFree:%d", DebugUtil::ramSize(), DebugUtil::ramFree())
+#define DEBUG_MEMORY_EVERY(interval) DEBUG_EVERY(interval) DEBUG_MEMORY()
+
+#endif // _DEBUG_UTIL_ENABLE_H_

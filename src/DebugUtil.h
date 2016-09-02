@@ -15,15 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-#ifndef DEBUG_UTIL_H
-#define DEBUG_UTIL_H
+#pragma once
+#ifndef _DEBUG_UTIL_H_
+#define _DEBUG_UTIL_H_
 
 #ifdef WITH_DEBUG
 #include "DebugUtilEnable.h"
 #else
 #include "DebugUtilDisable.h"
 #endif
+#include "DebugUtilRunEvery.h"
 
 extern "C++" { namespace DebugUtil {
 
@@ -32,4 +33,4 @@ int ramSize();
 
 }} // namespace
 
-#endif // DEBUG_UTIL_H
+#endif // _DEBUG_UTIL_H_

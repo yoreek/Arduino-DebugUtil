@@ -1,7 +1,7 @@
 # Arduino debug utilities [![Build Status](https://travis-ci.org/yoreek/Arduino-DebugUtil.svg?branch=master)](https://travis-ci.org/yoreek/Arduino-DebugUtil)
 
-* Version: 1.0.4
-* Release Date: 2016-07-18
+* Version: 1.0.5
+* Release Date: 2016-09-02
 
 ## What is this repository for? ##
 
@@ -29,21 +29,81 @@ Utilities for logging printf style formatted data to any Serial ports.
 #include <DebugUtil.h>
 
 void setup() {
-    DEBUG_SERIAL_SETUP(9600);
+    DEBUG_SERIAL_BEGIN(9600);
 }
 
 void loop() {
-    DEBUG("ramSize=%d, ramFree=%d", DebugUtil::ramSize(), DebugUtil::ramFree());
-    delay(1000);
+    // 12: QuickStart.ino:29 loop - param: 123
+    DEBUG("simple test");
+
+    // 55: QuickStart.ino:32 loop - print every 1s param: 123
+    DEBUG("param: %d", 123);
+
+    // 113: QuickStart.ino:35 loop - ramSize=2187, ramFree=1487
+    DEBUG_EVERY(1000, "print every 1s param: %d", 123);
+
+    DEBUG_EVERY(3000) {
+        // 113: QuickStart.ino:39 loop - ramSize=2187, ramFree=1487
+        DEBUG("ramSize=%d, ramFree=%d", DebugUtil::ramSize(), DebugUtil::ramFree());
+    }
+
+    DEBUG_EVERY(1000) {
+        int x = 123;
+        // 123
+        Serial.println(x);
+    }
+
+    DEBUG_EVERY_WITH_DELAY(1000, 5000) {
+        // 5198: QuickStart.ino:50 loop - print every 1s with delay 5s
+        DEBUG("print every 1s with delay 5s");
+    }
+
+    // 3594: QuickStart.ino:54 loop - run every 2s with delay 2s
+    DEBUG_EVERY_WITH_DELAY(2000, 2000, "run every 2s with delay 2s");
+
+    // 179: QuickStart.ino:57 loop - ramSize:2187 ramFree:1487
+    DEBUG_MEMORY_EVERY(2000);
+
+    DEBUG_EVERY(2000) {
+        // 5811: QuickStart.ino:61 loop - ramSize:2187 ramFree:1487
+        DEBUG_MEMORY();
+    }
+
+    runEvery(20000) {
+        // 296: QuickStart.ino:53 loop - sleep
+        DEBUG("sleep");
+        DEBUG_SERIAL_END();
+        sleep();
+        DEBUG_SERIAL_BEGIN(MONITOR_BAUDRATE);
+        // 3403: QuickStart.ino:71 loop - wakeup
+        DEBUG("wakeup");
+    }
 }
 ```
 
 Results:
 
 ```
-0: QuickStart.ino:15 loop - ramSize=2191, ramFree=1603
-1000: QuickStart.ino:15 loop - ramSize=2191, ramFree=1603
-2001: QuickStart.ino:15 loop - ramSize=2191, ramFree=1603
+0: QuickStart.ino:18 setup - setup
+0: QuickStart.ino:29 loop - simple test
+12: QuickStart.ino:32 loop - param: 123
+55: QuickStart.ino:35 loop - print every 1s param: 123
+113: QuickStart.ino:39 loop - ramSize=2187, ramFree=1487
+123
+179: QuickStart.ino:57 loop - ramSize:2187 ramFree:1487
+237: QuickStart.ino:61 loop - ramSize:2187 ramFree:1487
+296: QuickStart.ino:66 loop - sleep
+3403: QuickStart.ino:71 loop - wakeup
+3403: QuickStart.ino:29 loop - simple test
+3422: QuickStart.ino:32 loop - param: 123
+3467: QuickStart.ino:35 loop - print every 1s param: 123
+3527: QuickStart.ino:39 loop - ramSize=2187, ramFree=1487
+123
+3594: QuickStart.ino:54 loop - run every 2s with delay 2s
+3655: QuickStart.ino:57 loop - ramSize:2187 ramFree:1487
+3716: QuickStart.ino:61 loop - ramSize:2187 ramFree:1487
+3776: QuickStart.ino:29 loop - simple test
+3821: QuickStart.ino:32 loop - param: 123
 ...
 ```
 ### Use StringUtil ###
@@ -62,7 +122,7 @@ To solve this problem, you can use `StringUtil` library.
 #include <DebugUtil.h>
 
 void setup() {
-    DEBUG_SERIAL_SETUP(9600);
+    DEBUG_SERIAL_BEGIN(9600);
 }
 
 void loop() {
@@ -97,6 +157,7 @@ Included on example folder, available on Arduino IDE.
 
 ## Version History ##
 
+ * 1.0.5 (2016-09-02): Added DEBUG_EVERY, DEBUG_EVERY_WITH_DELAY macros.
  * 1.0.4 (2016-07-18): Added DEBUG_COMPACT key to save memory.
  * 1.0.3 (2016-05-13): Fix bug when call without parameters.
  * 1.0.2 (2016-03-05): Improved macros.
