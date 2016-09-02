@@ -14,6 +14,8 @@ install:
 
 script:
   - arduino --verify --board ${BOARD} $PWD/examples/QuickStart/QuickStart.ino
+  - arduino --verify --board ${BOARD} $PWD/examples/TestWithDebug/TestWithDebug.ino
+  - arduino --verify --board ${BOARD} $PWD/examples/TestWithoutDebug/TestWithoutDebug.ino
 
 notifications:
   email:
