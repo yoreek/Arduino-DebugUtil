@@ -1,7 +1,7 @@
 # Arduino debug utilities [![Build Status](https://travis-ci.org/yoreek/Arduino-DebugUtil.svg?branch=master)](https://travis-ci.org/yoreek/Arduino-DebugUtil)
 
-* Version: 1.0.5
-* Release Date: 2016-09-02
+* Version: 1.0.6
+* Release Date: 2017-08-24
 
 ## What is this repository for? ##
 
@@ -157,6 +157,7 @@ Included on example folder, available on Arduino IDE.
 
 ## Version History ##
 
+ * 1.0.6 (2017-08-24): Optimize code size.
  * 1.0.5 (2016-09-02): Added DEBUG_EVERY, DEBUG_EVERY_WITH_DELAY macros.
  * 1.0.4 (2016-07-18): Added DEBUG_COMPACT key to save memory.
  * 1.0.3 (2016-05-13): Fix bug when call without parameters.

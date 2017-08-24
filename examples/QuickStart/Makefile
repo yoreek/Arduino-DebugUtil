@@ -3,14 +3,15 @@
 #ARDUINO_QUIET = 1
 ROOT_DIR = $(HOME)/robot
 
-BOARD_TAG = uno
-#BOARD_TAG = mega
-#BOARD_SUB = atmega2560
+#BOARD_TAG = uno
+BOARD_TAG = mega
+BOARD_SUB = atmega2560
 
 ARDUINO_DIR = $(ROOT_DIR)/arduino
 AVR_TOOLS_DIR = /usr
 AVRDUDE_CONF = /etc/avrdude.conf
-ARDUINO_PORT = /dev/ttyACM0
+#ARDUINO_PORT = /dev/ttyACM0
+ARDUINO_PORT = /dev/ttyUSB0
 
 # No reset and no init modem
 #MONITOR_CMD = picocom -l -i -r

@@ -1,15 +1,19 @@
-#include <Arduino.h>
+#if defined(ARDUINO) && ARDUINO >= 100
+#   include "Arduino.h"
+#else
+#   include "WProgram.h"
+#endif
 
 // Activate debug:
 #ifndef WITH_DEBUG
-#define WITH_DEBUG
+#   define WITH_DEBUG
 #endif
 //#undef WITH_DEBUG
 
 #include <DebugUtil.h>
 
 #ifndef MONITOR_BAUDRATE
-#define MONITOR_BAUDRATE 9600
+#   define MONITOR_BAUDRATE 9600
 #endif
 
 void setup() {
@@ -70,4 +74,6 @@ void loop() {
         // 3403: QuickStart.ino:71 loop - wakeup
         DEBUG("wakeup");
     }
+
+    delay(500);
 }

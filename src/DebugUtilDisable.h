@@ -1,6 +1,6 @@
 /*
  * DebugUtilDisable.h - Arduino debug utilities
- * Copyright (C) 2016 Yuriy Ustushenko
+ * Copyright (C) 2016-2017 Yuriy Ustushenko
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the version 3 GNU General Public License as
@@ -24,7 +24,6 @@
 #define DEBUG_SERIAL_BEGIN(speed)
 #define DEBUG_SERIAL_SETUP(speed)
 #define DEBUG_SERIAL_END()
-#define DEBUG_PRINT(...)
 #define DEBUG(...)
 
 #define DEBUG_EVERY_0()

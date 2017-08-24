@@ -11,6 +11,7 @@
 
 void setup() {
     DEBUG_SERIAL_BEGIN(9600);
+    DEBUG("setup");
 }
 
 void loop() {

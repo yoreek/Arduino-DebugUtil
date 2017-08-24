@@ -1,6 +1,6 @@
 /*
  * DebugUtilPP.h - Arduino debug utilities
- * Copyright (C) 2016 Yuriy Ustushenko
+ * Copyright (C) 2016-2017 Yuriy Ustushenko
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the version 3 GNU General Public License as
