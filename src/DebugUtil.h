@@ -95,7 +95,7 @@ class DebugUtil {
         {
             va_list args;
 
-            DebugUtil::printf(DEBUG_UTIL_F("%F %T: %s:%d %s - "), file, line, func);
+            DebugUtil::printf(DEBUG_UTIL_F("%F %T: %s:%d %P - "), file, line, func);
 
             va_start(args, fmt);
             vprintf(fmt, args);
@@ -108,7 +108,7 @@ class DebugUtil {
         {
             va_list args;
 
-            DebugUtil::printf(DEBUG_UTIL_F("%lu: %s:%d %s - "), millis(), file, line, func);
+            DebugUtil::printf(DEBUG_UTIL_F("%lu: %s:%d %P - "), millis(), file, line, func);
 
             va_start(args, fmt);
             vprintf(fmt, args);
